@@ -45,8 +45,8 @@ Before running the project, ensure you have the following installed:
 ### Clone the repository
 
 ```sh
-git clone <repository_url>
-cd <project_directory>
+git clone https://github.com/ice-pattanachai/deepseek.git
+cd deepseek
 ```
 
 ### Install dependencies
@@ -110,16 +110,6 @@ yarn start
   npm install -g pm2
   pm2 start npm --name "next-app" -- run start
   ```
-
----
-
-## Environment Variables
-
-- Create a `.env.local` file and add necessary configurations:
-  ```ini
-  NEXT_PUBLIC_API_URL=https://api.example.com
-  ```
-  - Ensure sensitive values are not committed to the repository.
 
 ---
 
