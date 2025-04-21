@@ -5,14 +5,39 @@ import React, { useState } from 'react'
 interface PromptBoxProps {
   isLoading: boolean;
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  setMessages: React.Dispatch<React.SetStateAction<{ role: string; content: string }[]>>; //ไว้ลบ
 }
 
-const PromptBox: React.FC<PromptBoxProps> = ({ setIsLoading, isLoading }) => {
+const PromptBox: React.FC<PromptBoxProps> = ({ setIsLoading, isLoading , setMessages}) => {
 
     const [prompt, setPrompt] = useState('');
 
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!prompt.trim()) return;
+
+    setIsLoading(true); // เริ่ม loading
+
+    setMessages(prev => [...prev, { role: 'user', content: prompt }]); //ไว้ลบ
+    setPrompt('');
+    setIsLoading(false);
+
+    try {
+      // ตัวอย่างเรียก API หรือทำงาน async
+      await new Promise((resolve) => setTimeout(resolve, 1500)); // mock delay
+
+      console.log('Prompt submitted:', prompt);
+      setPrompt('');
+    } catch (error) {
+      console.error('Error submitting prompt:', error);
+    } finally {
+      setIsLoading(false); // หยุด loading ไม่ว่าจะสำเร็จหรือ error
+    }
+  };
+
     return (
-        <form className={`w-full ${false ? "max-w-3xl" : "max-w-2xl"} bg-[#404045] p-4 rounded-3xl mt-4 transition-all`}>
+        <form onSubmit={handleSubmit} className={`w-full ${false ? "max-w-3xl" : "max-w-2xl"} bg-[#404045] p-4 rounded-3xl mt-4 transition-all`}>
             <textarea className='outline-none w-full resize-none overflow-hidden break-words bg-transparent' rows={2}
             placeholder='Message DeepSeek' required
             onChange={(e) => setPrompt(e.target.value)}
