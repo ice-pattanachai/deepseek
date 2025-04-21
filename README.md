@@ -1,36 +1,155 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next.js Project Setup Guide
 
-## Getting Started
+## Prerequisites
 
-First, run the development server:
+Before running the project, ensure you have the following installed:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+### 1. Install Node.js and npm (or yarn)
+
+- **Linux**:
+  ```sh
+  curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+  sudo apt-get install -y nodejs
+  ```
+- **MacOS** (using Homebrew):
+  ```sh
+  brew install node
+  ```
+- **Windows**:
+  - Download and install from [Node.js official site](https://nodejs.org/)
+
+### 2. Install a Package Manager (Optional)
+
+- Use `npm` (comes with Node.js) or install `yarn`:
+  ```sh
+  npm install -g yarn
+  ```
+
+### 3. Install Git
+
+- **Linux**:
+  ```sh
+  sudo apt-get install git
+  ```
+- **MacOS**:
+  ```sh
+  brew install git
+  ```
+- **Windows**:
+  - Download and install from [Git official site](https://git-scm.com/)
+
+---
+
+## Project Setup
+
+### Clone the repository
+
+```sh
+git clone <repository_url>
+cd <project_directory>
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Install dependencies
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```sh
+npm install
+# OR
+yarn install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Running the Project
 
-To learn more about Next.js, take a look at the following resources:
+### Start the development server
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```sh
+npm run dev
+# OR
+yarn dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- The app will be available at `http://localhost:3000`
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Building for Production
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Create a production build
+
+```sh
+npm run build
+# OR
+yarn build
+```
+
+### Run the production server
+
+```sh
+npm run start
+# OR
+yarn start
+```
+
+---
+
+## Additional Dependencies
+
+- **Docker** (Optional, for containerization)
+
+  ```sh
+  sudo apt-get install docker.io    # Linux
+  brew install docker               # MacOS
+  ```
+
+  - Windows: Install Docker Desktop from [Docker official site](https://www.docker.com/)
+
+- **PM2** (Optional, for running in the background)
+
+  ```sh
+  npm install -g pm2
+  pm2 start npm --name "next-app" -- run start
+  ```
+
+---
+
+## Environment Variables
+
+- Create a `.env.local` file and add necessary configurations:
+  ```ini
+  NEXT_PUBLIC_API_URL=https://api.example.com
+  ```
+  - Ensure sensitive values are not committed to the repository.
+
+---
+
+## Deployment
+
+- Deploy using **Vercel** (Recommended):
+  ```sh
+  npm install -g vercel
+  vercel
+  ```
+- Deploy manually:
+  ```sh
+  npm run build
+  npm run start
+  ```
+
+---
+
+## Troubleshooting
+
+- If there are issues with dependencies, try:
+  ```sh
+  rm -rf node_modules package-lock.json
+  npm install
+  ```
+- If port `3000` is in use:
+  ```sh
+  npx kill-port 3000
+  ```
+- Check logs:
+  ```sh
+  npm run build && npm run start
+  ```
