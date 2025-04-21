@@ -60,7 +60,7 @@ const Sidebar: React.FC<SidebarProps> = ({ expand, setExpand }) => {
                         Recents
                     </p>
                     {/* ChatLabel */}
-                    <ChatLabel openMenu={openMenu} setOpenMenu={setOpenMenu} />
+                    <ChatLabel id={1} openMenu={openMenu} setOpenMenu={setOpenMenu} />
                 </div>
             </div>
 

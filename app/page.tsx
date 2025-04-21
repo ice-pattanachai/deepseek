@@ -9,7 +9,7 @@ import Message from "@/components/Message";
 export default function Home() {
 
   const [expand, setExpand] = useState(false)
-  const [messages, setMessages] = useState([])
+    const [messages, setMessages] = useState<{ role: string; content: string }[]>([]);
   const [isLoading, setIsLoading] = useState(false)
 
   return (
@@ -37,7 +37,7 @@ export default function Home() {
         }
 
         {/* prompt box */}
-        <PromptBox isLoading={isLoading} setIsLoading={setIsLoading} />
+        <PromptBox isLoading={isLoading} setIsLoading={setIsLoading} setMessages={setMessages} />
         <p className={`text-xs absolute bottom-1 text-gray-500`}>AI-generated, for reference only</p>
 
         </div>
