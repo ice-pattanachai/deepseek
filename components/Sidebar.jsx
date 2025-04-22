@@ -5,16 +5,12 @@ import { useClerk , UserButton} from '@clerk/nextjs';
 import { useAppContext } from '@/context/AppContext';
 import ChatLabel from './ChatLabel';
 
-interface SidebarProps {
-  expand: boolean;
-  setExpand: React.Dispatch<React.SetStateAction<boolean>>; 
-}
 
-const Sidebar: React.FC<SidebarProps> = ({ expand, setExpand }) => {
+const Sidebar = ({ expand, setExpand }) => {
 
     const { openSignIn } = useClerk()
-    const {user} = useAppContext()
-    const [openMenu , setOpenMenu] = useState({id: 8 , open: false}) 
+    const {user, chats , createNewChat} = useAppContext()
+    const [openMenu , setOpenMenu] = useState({id: 0 , open: false}) 
     
     return (
         <div className={`flex flex-col justify-between bg-[#212327] pt-7 transition-all duration-300 z-50 max-md:absolute max-md:h-screen
@@ -22,7 +18,7 @@ const Sidebar: React.FC<SidebarProps> = ({ expand, setExpand }) => {
             <div>
                 <div className={`flex ${expand ? "flex-row gap-10 items-center" : "flex-col items-center gap-8"}`}>
                     <Image className={`${expand ? "w-36" : "w-10"}`} src={expand ? assets.logo_text : assets.logo_icon} alt='Logo'/>
-                    <div onClick={() => setExpand(!expand)} 
+                    <div onClick={() => expand ? setExpand(false) : setExpand(true)} 
                     className={`
                         group relative flex items-center justify-center
                         hover:bg-gray-500/20 transition-all duration-300 h-9 w-9 {/* แก้ไข w=9 เป็น w-9 */}
@@ -43,7 +39,8 @@ const Sidebar: React.FC<SidebarProps> = ({ expand, setExpand }) => {
                     </div>
                 </div>
                 
-                <button className={`mt-8 flex items-center justify-center cursor-pointer 
+                <button onClick={createNewChat}
+                className={`mt-8 flex items-center justify-center cursor-pointer 
                 ${expand ? "bg-primary hover:opacity-90 rounded-2xl gap-2 p-2.5 w-max" : "group relative h-9 w-9 mx-auto hover:bg-gray-500/30 rounded-lg"}`}>
                     <Image className={`${expand ? 'w-7' : 'w-7'}}`} src={expand ? assets.chat_icon : assets.chat_icon_dull} alt=''/>
                     <div className={`absolute w-max -top-12 -right-12 opacity-0 group-hover:opacity-100 transition 
@@ -60,7 +57,9 @@ const Sidebar: React.FC<SidebarProps> = ({ expand, setExpand }) => {
                         Recents
                     </p>
                     {/* ChatLabel */}
-                    <ChatLabel id={1} openMenu={openMenu} setOpenMenu={setOpenMenu} />
+                    {chats.map((chat, index) => 
+                        <ChatLabel key={index} name={chat.name} id={chat._id} openMenu={openMenu} setOpenMenu={setOpenMenu} />
+                    )}
                 </div>
             </div>
 
@@ -81,15 +80,14 @@ const Sidebar: React.FC<SidebarProps> = ({ expand, setExpand }) => {
                 {expand && <> <span> Get App </span> <Image alt='' src={assets.new_icon}/> </>}
                 </div>
 
-                <div onClick={() => {
-                        if (!user) openSignIn();
-                    }}
+                <div onClick={user ? null : openSignIn}
                     className={`flex items-center ${expand ? 'hover:bg-white/10 rounded-lg' : 'justify-center w-full'} 
                         gap-3 text-white/60 text-sm p-2 mt-2 cursor-pointer`}>
                             {
                                 user ? <UserButton />
                                 :  <Image src={assets.profile_icon} alt='' className={`w-7`} />
                             }
+                            {/* <Image src={assets.profile_icon} alt='' className={`w-7`} /> */}
                     {expand && <span>My Profile</span>}
                 </div>
 
